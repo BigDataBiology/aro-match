@@ -1,4 +1,6 @@
+import re
 import pronto
+
 aro = pronto.Ontology('./aro.owl')
 
 name2id = {}
@@ -17,8 +19,14 @@ for line in open('resfinder_db/notes.txt'):
     if line[0] != '#':
         gene = line.split(':')[0]
         key = gene.lower()
-        if key.startswith('bla'):
+        # blaLEN1 is encoded as LEN-1 (note the "-")
+        if key.startswith('blalen'):
+            key = key.replace('blalen', 'len-')
+        elif key.startswith('bla'):
             key = key[3:]
+        # Erm(A) is encoded as "ErmA"
+        elif re.match(r'erm\(.\)', key):
+            key = re.sub(r'erm\((.)\)',r'erm\1', key)
         if key in name2id:
             matched.append(gene)
         else:
