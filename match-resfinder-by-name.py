@@ -13,7 +13,7 @@ for t in aro.terms():
 # Normalize by converting to lower case
 name2id = {k.lower():v for k,v in name2id.items()}
 
-matched = []
+matched = {}
 unmatched = []
 for line in open('resfinder_db/notes.txt'):
     if line[0] != '#':
@@ -28,7 +28,7 @@ for line in open('resfinder_db/notes.txt'):
         elif re.match(r'erm\(.\)', key):
             key = re.sub(r'erm\((.)\)',r'erm\1', key)
         if key in name2id:
-            matched.append(gene)
+            matched[gene] = name2id[key]
         else:
             unmatched.append(gene)
 
