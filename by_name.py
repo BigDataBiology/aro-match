@@ -45,6 +45,8 @@ def try_match(gene : str) -> typing.Optional[str]:
     # Erm(A) is encoded as "ErmA"
     elif re.match(r'erm\(.\)', key):
         key = re.sub(r'erm\((.)\)',r'erm\1', key)
+    elif re.match(r'^tet\((.)\)$', key):
+        key = re.sub(r'tet\((.)\)',r'tet\1', key)
     if key in name2id:
         return name2id[key]
 
