@@ -16,6 +16,9 @@ def lazy_load_name2id():
 
         # Normalize by converting to lower case
         _name2id = {k.lower():v for k,v in name2id.items()}
+
+        # Check that there were no conflicts introduced by the case conversion
+        assert len(name2id) == len(_name2id)
     return _name2id
 
 def try_match(gene : str) -> typing.Optional[str]:
@@ -32,7 +35,6 @@ def try_match(gene : str) -> typing.Optional[str]:
     '''
     import re
     name2id = lazy_load_name2id()
-    
 
     key = gene.lower()
     # resfinder:blaLEN1 is encoded as LEN-1 in ARO (note the "-")
