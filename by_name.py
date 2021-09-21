@@ -18,7 +18,8 @@ def lazy_load_name2id():
         _name2id = {k.lower():v for k,v in name2id.items()}
 
         # Check that there were no conflicts introduced by the case conversion
-        assert len(name2id) == len(_name2id)
+        if len(name2id) != len(_name2id):
+            print("Case normalization introduced conflicts")
     return _name2id
 
 def try_match(gene : str) -> typing.Optional[str]:
